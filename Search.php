@@ -1,3 +1,7 @@
+<?php
+require_once('./dao/productDAO.php');
+?>
+
 <html lang="en">
 <head>
 	<title>Palace Culture Store</title>
@@ -9,9 +13,8 @@
 
 	<script src="js/jquery-3.4.1.slim.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/productCollections.js"></script>
-    <script src="js/search.js"></script>
-	    <link rel="stylesheet" href="css/style.css">
+	<script src="js/search.js"></script>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- navagation bar -->
@@ -20,7 +23,7 @@
             <div class="menu-wrapper">
                 <div class="logo">
                     <!-- logo inserted here -->
-                    <a href="index.html" class="navbar-left "><img class="logo" src="images/logo.jpg"></a>
+                    <a href="index.php" class="navbar-left "><img class="logo" src="images/logo.jpg"></a>
                 </div>
                 
                 <!-- menu -->
@@ -28,7 +31,7 @@
                     <ul class="nav navbar-nav navbar-right boldnav">
                         <!-- home -->
                         <li>
-                            <a href="index.html" id="home">Home</a>
+                            <a href="index.php" id="home">Home</a>
                         </li>
                         <!-- shop-dropdown -->
                         <li class="dropdown">
@@ -37,32 +40,32 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="Search.html?search=">Shop All</a>
+                                    <a href="Search.php?search=">Shop All</a>
                                 </li>
                                 <li>
-                                    <a href="Search.html?search=Cups">Cups</a>
+                                    <a href="Search.php?search=Cups">Cups</a>
                                 </li>
                                 <li>
-                                    <a href="Search.html?search=Accessories">Accessories</a>
+                                    <a href="Search.php?search=Accessories">Accessories</a>
                                 </li>
                                 <li>
-                                    <a href="Search.html?search=Cosmetics">Cosmetics</a>
+                                    <a href="Search.php?search=Cosmetics">Cosmetics</a>
                                 </li>
                             </ul>
                         </li>
                         <!-- contact us -->
                         <li>
-                            <a href="ContacUs.html">Contact Us</a>
+                            <a href="ContacUs.php">Contact Us</a>
                         </li>
                         <!-- search bar -->
                         <li>
-                            <form class="navbar-form navbar-right" id="search_box" action="Search.html" method="GET">
+                            <form class="navbar-form navbar-right" id="search_box" action="Search.php" method="GET">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search" name="search">
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
                                             <i class="glyphicon glyphicon-search">
-                                                <a href="Search.html"></a>
+                                                <a href="Search.php"></a>
                                             </i>
                                         </button>
                                     </div>
@@ -71,7 +74,7 @@
                         </li>
                         <!-- user button -->
                         <li>
-                            <a href="signin.html">
+                            <a href="signin.php">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a>
                         </li>
@@ -121,9 +124,15 @@
 <div class="search">
     <div class="container">
         <div id = "product-list">
-            <script>
-                productSearchByTerm(myProductArray, searchTerm);
-            </script>
+            <?php
+                $productDAO = new productDAO();
+                $productsSearchByTerm = $productDAO->getProductsByTerm();
+                if($productsSearchByTerm){
+                    foreach ($productsSearchByTerm as $product){
+						$productDAO->showProductInSmallBlock($product);
+					}  
+                }
+            ?>
         </div>
     </div>
 </div>	 
