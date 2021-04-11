@@ -28,13 +28,13 @@ require_once('./dao/productDAO.php');
     //The entire web page is contained in the try block, so
     //if there is any issue, the page does not load, and instead
     //informs the user about the error.
+    error_reporting(0);
     try{
         $productDAO = new productDAO();
         //Tracks errors with the form fields
         $hasError = false;
         //Array for our error messages
         $errorMessages = Array();
-
         //Ensure all three values are set.
         //They will only be set when the form is submitted.
         //We only want the code that adds an employee to 
@@ -70,10 +70,32 @@ require_once('./dao/productDAO.php');
                 $hasError = true;
             }
 
+            if($_POST['productImage1'] == ""){
+                $errorMessages['productImage1Error'] = "Please select a product image.";
+                $hasError = true;
+            }
+            if($_POST['productImage2'] == ""){
+                $errorMessages['productImage2Error'] = "Please select a product image.";
+                $hasError = true;
+            }
+            if($_POST['productImage3'] == ""){
+                $errorMessages['productImage3Error'] = "Please select a product image.";
+                $hasError = true;
+            }
+            if($_POST['productImage1Error2'] != ""){
+                $hasError = true;
+            }
+            if($_POST['productImage2Error2'] != ""){
+                $hasError = true;
+            }
+            if($_POST['productImage3Error2'] != ""){
+                $hasError = true;
+            }
+            
             if(!$hasError){
                 $product = new Product("",$_POST['productName'], $_POST['productCatalog'], $_POST['productPrice'],
-                                        $_POST['productDescription'], $_POST['productRating'], $_POST['productImage1'],
-                                        $_POST['productImage2'], $_POST['productImage3'], date("Y-m-d"));
+                                        $_POST['productDescription'], $_POST['productRating'], 'images/'.$_POST['productImage1'],
+                                        'images/'.$_POST['productImage2'], 'images/'.$_POST['productImage3'], date("Y-m-d"));
                 $addSuccess = $productDAO->addProduct($product);
                 echo '<h3>' . $addSuccess . '</h3>';
             }
@@ -143,59 +165,53 @@ require_once('./dao/productDAO.php');
                         <option value ="2">2</option>
                         <option value ="1">1</option>
                         </select>
-                        <?php 
-                        //If there was an error with the productRating field, display the message
-                        if(isset($errorMessages['productRatingError'])){
-                                echo '<span style=\'color:red\'>' . $errorMessages['productRatingError'] . '</span>';
-                              }
-                        ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Product Image1</td>
                     <td>
-                        <div>
-                            <input type="file" accept="images/*" id="imageFile1">
-                        </div>
-                    <?php 
-                    //If there was an error with the productImage1 field, display the message
-                    if(isset($errorMessages['productImage1Error'])){
-                            echo '<span style=\'color:red\'>' . $errorMessages['productImage1Error'] . '</span>';
-                          }
-                    ?>
+                        <input type="file" accept="image/*" id="productImage1" name="productImage1"/>
+                        <?php 
+                        //If there was an error with the productRating field, display the message
+                        if(isset($errorMessages['productImage1Error'])){
+                            echo '<span style=\'color:red\' id=\'productImage1Error\'>' . $errorMessages['productImage1Error'] . '</span>';
+                        }
+                        ?>
+                        <span style='color:red' id='productImage1Error2'/>
+                        <span style='color:green' id='productImage1UpdatedMessage'/>
                     </td>
                 </tr>
                 <tr>
                     <td>Product Image2</td>
                     <td>
-                        <div>
-                            <input type="file" accept="images/*" id="imageFile2">
-                        </div>
-                    <?php 
-                    //If there was an error with the productImage2 field, display the message
-                    if(isset($errorMessages['productImage2Error'])){
-                            echo '<span style=\'color:red\'>' . $errorMessages['productImage2Error'] . '</span>';
-                          }
-                    ?>
+                        <input type="file" accept="image/*" id="productImage2" name="productImage2"/>
+                        <?php 
+                        //If there was an error with the productRating field, display the message
+                        if(isset($errorMessages['productImage2Error'])){
+                            echo '<span style=\'color:red\' id=\'productImage2Error\'>' . $errorMessages['productImage2Error'] . '</span>';
+                        }
+                        ?>
+                        <span style='color:red' id='productImage2Error2'/>
+                        <span style='color:green' id='productImage2UpdatedMessage'/>
                     </td>
                 </tr>
                 <tr>
                     <td>Product Image3</td>
                     <td>
-                        <div>
-                            <input type="file" accept="images/*" id="imageFile3">
-                        </div>
-                    <?php 
-                    //If there was an error with the productImage3 field, display the message
-                    if(isset($errorMessages['productImage3Error'])){
-                            echo '<span style=\'color:red\'>' . $errorMessages['productImage3Error'] . '</span>';
-                          }
-                    ?>
+                        <input type="file" accept="image/*" id="productImage3" name="productImage3"/>
+                        <?php 
+                        //If there was an error with the productRating field, display the message
+                        if(isset($errorMessages['productImage3Error'])){
+                            echo '<span style=\'color:red\' id=\'productImage3Error\'>' . $errorMessages['productImage3Error'] . '</span>';
+                        }
+                        ?>
+                        <span style='color:red' id='productImage3Error2'/>
+                        <span style='color:green' id='productImage3UpdatedMessage'/>
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="button" value="Upload Image Files" onclick="uploadFiles();"></input></td>
-                    <td><input type="submit" name="btnSubmit" id="btnSubmit" value="Add Product"></td>
+                    <td class="uploadButton"><input type="button" name="uploadButton" id="uploadButton" value="Upload Pictures" onclick="uploadFiles();"></td>
+                    <td class="submitButton"><input type="submit" name="btnSubmit" id="btnSubmit" value="Add Product"></td>
                     <td><input type="reset" name="btnReset" id="btnReset" value="Reset"></td>
                 </tr>
             </table>

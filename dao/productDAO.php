@@ -150,11 +150,8 @@ class productDAO extends abstractDAO {
     }
 
     public function addProduct($product){
-        if(!is_numeric($product->getProductID())){
-            return 'ProductId must be a number.';
-        }
         if(!$this->mysqli->connect_errno){
-            $query = 'INSERT INTO product VALUES (?,?,?,?,?,?,?,?,?,?)';
+            $query = 'INSERT INTO product VALUES ("",?,?,?,?,?,?,?,?,DEFAULT)';
             $stmt = $this->mysqli->prepare($query);
             //The first parameter of bind_param takes a string
             //describing the data. In this case, we are passing 
@@ -164,7 +161,8 @@ class productDAO extends abstractDAO {
             //The string contains a one-letter datatype description
             //for each parameter. 'i' is used for integers, and 's'
             //is used for strings.
-            $stmt->bind_param('ssdssssss', 
+            //echo $product->getProductImage3().$product->getProductDate();
+            $stmt->bind_param('sssdssss',        
                     $product->getProductName(), 
                     $product->getProductCatalog(),
                     $product->getProductPrice(), 
@@ -172,8 +170,7 @@ class productDAO extends abstractDAO {
                     $product->getProductRating(),
                     $product->getProductImage1(), 
                     $product->getProductImage2(), 
-                    $product->getProductImage3(),
-                    $product->getProductDate());
+                    $product->getProductImage3());
             //Execute the statement
             $stmt->execute();
             //If there are errors, they will be in the error property of the
