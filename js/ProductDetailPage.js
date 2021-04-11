@@ -1,19 +1,5 @@
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);  
-const productID = urlParams.get('id');
-//function used array to insert products by id
-var product =selectProduct();
-
-function selectProduct(){
-    for(let product of myProductArray){
-        if(product.productID==productID){
-            return product;
-        }
-    }
-}
 
 window.onload=function(){
-
     if(product!=""){
         //function to display title, price, quantity and total price
         document.querySelector('#title').innerHTML = product.productName;

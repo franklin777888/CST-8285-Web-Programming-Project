@@ -1,7 +1,12 @@
 <?php
 require_once('./dao/productDAO.php');
+$productDAO = new productDAO();
+$products = $productDAO->getProducts();
 ?>
 
+<script>
+var products = <?php echo json_encode($products); ?>;
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,81 +20,11 @@ require_once('./dao/productDAO.php');
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-3.4.1.slim.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+    <script src="js/search.js"></script>
 </head>
 
 <body>
-    <!-- navagation bar -->
-    <header class="main-header header-sticky">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="menu-wrapper">
-                <div class="logo">
-                    <!-- logo inserted here -->
-                    <a href="index.php" class="navbar-left "><img class="logo" src="images/logo.jpg"></a>
-                </div>
-                
-                <!-- menu -->
-                <div class="collapse navbar-collapse" id="micon">
-                    <ul class="nav navbar-nav navbar-right boldnav">
-                        <!-- home -->
-                        <li>
-                            <a href="index.php" id="home">Home</a>
-                        </li>
-                        <!-- shop-dropdown -->
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="">Shop
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="Search.php?search=">Shop All</a>
-                                </li>
-                                <li>
-                                    <a href="Search.php?search=Cups">Cups</a>
-                                </li>
-                                <li>
-                                    <a href="Search.php?search=Accessories">Accessories</a>
-                                </li>
-                                <li>
-                                    <a href="Search.php?search=Cosmetics">Cosmetics</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- contact us -->
-                        <li>
-                            <a href="ContacUs.php">Contact Us</a>
-                        </li>
-                        <!-- search bar -->
-                        <li>
-                            <form class="navbar-form navbar-right" id="search_box" action="Search.php" method="GET">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="search">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" type="submit">
-                                            <i class="glyphicon glyphicon-search">
-                                                <a href="Search.php"></a>
-                                            </i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </li>
-                        <!-- user button -->
-                        <li>
-                            <a href="signin.php">
-                                <span class="glyphicon glyphicon-user"></span>
-                            </a>
-                        </li>
-                        <!-- shopping cart button -->
-                        <li>
-                            <a href="">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Cart
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php include 'header.html';?>
     
     <!-- edit the wrapper -->
     <div class="wrapper">
@@ -186,16 +121,9 @@ require_once('./dao/productDAO.php');
         <h1 class="lg-text">Featured Products</h1>
         <br>
         <div id="feature-product">
-            <?php
-                $productDAO = new productDAO();
-                $products = $productDAO->getProducts();
-                if($products){
-                    for($x = 0; $x < 3; $x++){
-                        $product = $products[$x];
-                        $productDAO->showProductInSmallBlock($product);
-                    }
-                }
-            ?>
+            <script>
+                displayFeatureProducts(products);
+            </script>
         </div>
     </div>
     
@@ -217,17 +145,7 @@ require_once('./dao/productDAO.php');
     </div>
 
     <!-- edit footer-->
-    <footer>
-        <div class="gcs-footer">
-            <div class="footer-top">
-                <a href="#">Twitter</a> |
-                <a href="#">Facebook</a> |
-                <a href="#">YouTube</a> |
-                <a href="#">Instagram</a>
-            </div>
-            <p>Copyright &copy; Palace Culture</p>
-        </div>
-    </footer>
+    <?php include 'footer.html';?>
     <!-- Footer End-->
     
     <!-- using bootstrap -->

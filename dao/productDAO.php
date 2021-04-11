@@ -8,8 +8,6 @@ require_once('./model/product.php');
 
 /**
  * Description of productDAO
- *
- * @author Matt
  */
 class productDAO extends abstractDAO {
         
@@ -28,7 +26,7 @@ class productDAO extends abstractDAO {
         //The query method returns a mysqli_result object
         $result = $this->mysqli->query('SELECT * FROM product');
         $products = Array();
-        
+
         if($result->num_rows >= 1){
             while($row = $result->fetch_assoc()){
                 //Create a new employee object, and add it to the array.
@@ -59,12 +57,26 @@ class productDAO extends abstractDAO {
         $term = $_GET["search"];
         $productsSearchByTerm = array();
         if($term!=""){
-            $productsSearchByCategory = $this->getProductsByCategory($term);
-            array_push($productsSearchByTerm,$productsSearchByCategory);
-            $productsSearchByName = $this->getProductsByName($term);
-            array_push($productsSearchByTerm,$productsSearchByName);
-            
-            if(count($productsSearchByTerm)==0){
+            $result = $this->mysqli->query('SELECT * FROM product
+                                       WHERE LOWER(productCatalog) like LOWER("%'.$term.'%")
+                                            OR LOWER(productName) like LOWER("%'.$term.'%")');
+
+            if($result->num_rows >= 1){
+                while($row = $result->fetch_assoc()){
+                    //Create a new employee object, and add it to the array.
+                    $product = new Product($row['productID'],
+                                            $row['productName'],
+                                            $row['productCatalog'],
+                                            $row['productPrice'],
+                                            $row['productDescription'],
+                                            $row['productRating'],
+                                            $row['productImage1'],
+                                            $row['productImage2'],
+                                            $row['productImage3'],
+                                            $row['productDate']);
+                    $productsSearchByTerm[] = $product;
+                }
+            }else{
                 echo "<h2> No result found. </h2>";
                 $productsSearchByTerm = $this->getProducts();
             }
@@ -81,9 +93,10 @@ class productDAO extends abstractDAO {
      */
     public function getProductsByCategory($category){
         //The query method returns a mysqli_result object
-        $result = $this->mysqli->query('SELECT * FROM product WHERE productCatalog = '.$category);
+        $result = $this->mysqli->query('SELECT * FROM product
+                                       WHERE LOWER(productCatalog) like LOWER("%'.$category.'%")');
         $products = Array();
-        
+
         if($result->num_rows >= 1){
             while($row = $result->fetch_assoc()){
                 //Create a new employee object, and add it to the array.
@@ -106,40 +119,12 @@ class productDAO extends abstractDAO {
         return false;
     }
     
-        /*
-     * Returns an array of <code>products</code> objects. If no product exist, returns false.
-     */
-    public function getProductsByName($name){
-        //The query method returns a mysqli_result object
-        $result = $this->mysqli->query('SELECT * FROM product WHERE productName = '.$name);
-        $products = Array();
-        
-        if($result->num_rows >= 1){
-            while($row = $result->fetch_assoc()){
-                //Create a new employee object, and add it to the array.
-                $product = new Product($row['productID'],
-                                        $row['productName'],
-                                        $row['productCatalog'],
-                                        $row['productPrice'],
-                                        $row['productDescription'],
-                                        $row['productRating'],
-                                        $row['productImage1'],
-                                        $row['productImage2'],
-                                        $row['productImage3'],
-                                        $row['productDate']);
-                $products[] = $product;
-            }
-            $result->free();
-            return $products;
-        }
-        $result->free();
-        return false;
-    }
-    
+
     /*
      * Returns a specific product by search its productID. If no product exist, returns false.
      */
-    public function getProduct($product){
+    public function getProduct(){
+        $productID = $_GET["id"];
         $query = 'SELECT * FROM product WHERE productID = ?';
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param('i', $productID);
@@ -147,7 +132,7 @@ class productDAO extends abstractDAO {
         $result = $stmt->get_result();
         if($result->num_rows == 1){
             $temp = $result->fetch_assoc();
-            $employee = new Product($temp['productID'],
+            $product = new Product($temp['productID'],
                                     $temp['productName'],
                                     $temp['productCatalog'],
                                     $temp['productPrice'],
@@ -179,7 +164,6 @@ class productDAO extends abstractDAO {
             //The string contains a one-letter datatype description
             //for each parameter. 'i' is used for integers, and 's'
             //is used for strings.
-            $date = date("Y-m-d");
             $stmt->bind_param('ssdssssss', 
                     $product->getProductName(), 
                     $product->getProductCatalog(),
@@ -189,7 +173,7 @@ class productDAO extends abstractDAO {
                     $product->getProductImage1(), 
                     $product->getProductImage2(), 
                     $product->getProductImage3(),
-                    $date);
+                    $product->getProductDate());
             //Execute the statement
             $stmt->execute();
             //If there are errors, they will be in the error property of the
@@ -236,22 +220,6 @@ class productDAO extends abstractDAO {
         } else {
             return false;
         }
-    }
-    
-    public function showProductInSmallBlock($product){
-        echo "<div class=\"product\">";
-        echo "<a href=\"Product-detail.php\?id=". $product->getProductId() ."\">
-            <img class=\"img\" src=\"" . $product->getProductImage1() ."\" alt=\"lipstick03\"> </a>" . "<br>";
-        echo "<p class=\"productPrice\">$" . $product->getProductPrice() . "</p>";
-        
-        $rateStars = "";
-        for($i=0;$i<$product->getProductRating();$i++){
-            $rateStars .="<span class =\"fa fa-star checked\"></span>";
-        }
-        $rateLine = "<p>" . $rateStars . "</p>";
-        $nameLine = "<h4>" . "<a class=\"productName\" href=\"Product-detail.php\?name=". $product->getProductName() . "\">" . $product->getProductName() . "</a>" . " </h4>";
-        $divEnd = "</div> ";
-        echo $rateLine . $nameLine . $divEnd;
     }
 }
 

@@ -7,6 +7,9 @@
     width: 65%;
 }
 
+.addProduct{
+ margin-top: 100px;
+}
 
 /* Header*/
 .shop-name{
@@ -206,5 +209,15 @@ a:hover{
     margin-bottom: 70px;
 }
 
+td {
+    text-align: left;
+ }
  
-/* edit collection list */
+ tr {
+    margin-top: 20px;
+ }
+ 
+ .btnSubmit{
+  text-align: center;
+ }
+

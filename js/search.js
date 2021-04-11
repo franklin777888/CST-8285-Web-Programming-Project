@@ -1,88 +1,40 @@
-
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);  
-const searchTerm = urlParams.get('search');
-var showProducts = [];
-
-
-// search product by category
-// adding matching products to the new array showProducts
-function productSearchByCategory(productCollections, category){
-    for(let product of myProductArray){
-        if(product.productCatalog.toLowerCase().includes(searchTerm.toLowerCase())){
-            showProducts.push(product);
-        }
-    }
-}
-
-// search product by name
-// includes() to avoid showing products twice if productName = productCategory
-function productSearchByName(productCollections, name){
-    for(let product of myProductArray){
-        if(product.productName.toLowerCase().includes(searchTerm.toLowerCase())){
-            if(!showProducts.includes(product)){
-                showProducts.push(product);   
-            }
-        }
-    }
-}
-
-// search all products without conditions
-function searchAllProducts(productCollections){
-    for(let product of myProductArray){
-        showProducts.push(product);
-    } 
-}
-
 // display feature products in the index page
 // select products from first 3 items in the array
-function displayFeatureProducts(productCollections){
+function displayFeatureProducts(products){
     for(let i=0; i<3; i++){
-        document.write(myProductArray[i].productDetails());
+        document.write(productDetails(products[i]));
     }
 }
 
-// search by category/name and display result
-// display all products instead if no result found
-function productSearchByTerm(productCollections, term){
-    if(term!=""){
-        productSearchByCategory(productCollections, term);
-        productSearchByName(productCollections, term);
-        if(showProducts.length==0){
-            document.write("<h2> No result found. </h2>");
-            searchAllProducts(productCollections);
-        }
+// display certain products in the search page
+function displaySearchedProducts(products){
+    for(let product of products){
+        document.write(productDetails(product));
     }
-    else {
-        searchAllProducts(productCollections);
-    }
-    for(let product of showProducts){
-        document.write(product.productDetails());
-    }  
 }
 
 // function to sort products
 function sortProducts(arg) {
     if (arg.value == 'priceHighToLow') {
-        showProducts.sort(function(a,b){
+        productsSearchByTerm.sort(function(a,b){
             return b.productPrice - a.productPrice;
         });
     }else if (arg.value == 'priceLowToHigh') {
-        showProducts.sort(function(a,b){
+        productsSearchByTerm.sort(function(a,b){
             return a.productPrice - b.productPrice;
         });
     }else if (arg.value == 'ratingHighToLow') {
-        showProducts.sort(function(a,b){
+        productsSearchByTerm.sort(function(a,b){
             return b.productRating - a.productRating;
         });
     }else if (arg.value == 'ratingLowToHigh') {
-        showProducts.sort(function(a,b){
+        productsSearchByTerm.sort(function(a,b){
             return a.productRating - b.productRating;
         });
     }
     var SortedHTML="";
-    for(let product of showProducts){
-        SortedHTML+=product.productDetails();
+    for(let product of productsSearchByTerm){
+        SortedHTML+=productDetails(product);
     } 
     document.getElementById("product-list").innerHTML=SortedHTML;
     
@@ -96,7 +48,7 @@ function filter(field) {
         let high = +document.querySelector('#high-p').value || 9999999;
         document.querySelector('#low-r').value ='';
         document.querySelector('#high-r').value = '';
-        for(let product of showProducts){
+        for(let product of productsSearchByTerm){
             if((product.productPrice+0) >= low && (product.productPrice+0)<= high){
                 filteredResult.push(product);
             }
@@ -108,7 +60,7 @@ function filter(field) {
         document.querySelector('#low-p').value = '';
         document.querySelector('#high-p').value = '';
         
-        for(let product of showProducts){
+        for(let product of productsSearchByTerm){
             if(product.productRating >= low && product.productRating<= high){
                 filteredResult.push(product);
             }
@@ -116,7 +68,23 @@ function filter(field) {
     }
     SortedHTML="";
     for(let product of filteredResult){
-    SortedHTML+=product.productDetails();
+    SortedHTML+=productDetails(product);
     } 
     document.getElementById("product-list").innerHTML=SortedHTML;
+}
+
+
+function productDetails(product){
+    var divStart = "<div class=\"product\">";
+    var imageLine = "<a href=\"Product-detail.php\?id="+ product.productID +"\"><img class=\"img\" src=\"" + product.productImage1 +"\" alt=\"lipstick03\"> </a>" + "<br>";
+    var priceLine = "<p class=\"productPrice\">$" + product.productPrice + "</p>";
+    
+    var rateStars = "";
+    for(var i=0;i<product.productRating;i++){
+        rateStars +="<span class =\"fa fa-star checked\"></span>";
+    }
+    var rateLine = "<p>" + rateStars + "</p>";
+    var nameLine = "<h4>" + "<a class=\"productName\" href=\"Product-detail.php\?name="+ product.productName + "\">" + product.productName + "</a>" + " </h4>";
+    var divEnd = "</div> ";
+    return (divStart + imageLine + priceLine + rateLine + nameLine + divEnd);
 }

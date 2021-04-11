@@ -7,8 +7,6 @@ mysqli_report(MYSQLI_REPORT_STRICT);
  * Abstract data access class. Holds all of the database
  * connection information, and initializes a mysqli object
  * on instantiation.
- * 
- * @author Matt
  */
 class abstractDAO {
     protected $mysqli;

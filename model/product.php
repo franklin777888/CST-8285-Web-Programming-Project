@@ -1,5 +1,5 @@
 <?php
-	class Product{
+	class Product implements JsonSerializable{
 		private $productID;
 		private $productName;
 		private $productCatalog;
@@ -104,5 +104,21 @@
 			$this->productDate = $productDate;
 		}
 		
+		public function jsonSerialize()
+		{
+			return [
+				'productID' => $this->productID,
+				'productName' => $this->productName,
+				'productCatalog' => $this->productCatalog,
+				'productPrice' => $this->productPrice,
+				'productDescription' => $this->productDescription,
+				'productRating' => $this->productRating,
+				'productImage1' => $this->productImage1,
+				'productImage2' => $this->productImage2,
+				'productImage3' => $this->productImage3,
+				'productDate' => $this->productDate
+			];
+		}
+			
 	}
 ?>

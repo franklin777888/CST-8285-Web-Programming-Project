@@ -7,8 +7,8 @@ USE gugong;
 
 CREATE TABLE product(
     productID int NOT NULL AUTO_INCREMENT,
-	productName VARCHAR(50) NOT NULL,
-	productCatalog VARCHAR(50) NOT NULL,
+    productName VARCHAR(50) NOT NULL,
+    productCatalog VARCHAR(50) NOT NULL,
     productPrice DECIMAL(9,2) NOT NULL,
     productDescription VARCHAR(500) NOT NULL,
     productRating int(1) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE product(
     productImage2 VARCHAR(50) NOT NULL,
     productImage3 VARCHAR(50) NOT NULL,
     productDate DATE DEFAULT NOW(),
-	PRIMARY KEY (productID)
+    PRIMARY KEY (productID)
 	);
 
 -- Add original product colletions.
