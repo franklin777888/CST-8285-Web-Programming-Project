@@ -1,5 +1,7 @@
 <?php
 
+// whole file copy and paste from Week 11 Demo abstractDao.php
+
 //Used to throw mysqli_sql_exceptions for database
 //errors instead or printing them to the screen.
 mysqli_report(MYSQLI_REPORT_STRICT);

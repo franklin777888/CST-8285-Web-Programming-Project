@@ -14,15 +14,14 @@ if(isset($_POST["submit"])) {
   } else {
     echo "File is not an image.";
     $uploadOk = 0;
-    return;
   }
 }
 
 // Check if file already exists
+
 if (file_exists($target_file)) {
   echo "Sorry, file already exists.";
   $uploadOk = 0;
-  return;
 }
 
 
@@ -37,7 +36,6 @@ if ($uploadOk == 0) {
     
   } else {
     echo "Sorry, there was an error uploading your file.";
-    return;
   }
 }
 ?>

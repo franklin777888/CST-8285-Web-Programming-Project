@@ -177,7 +177,7 @@ require_once('./dao/productDAO.php');
                             echo '<span style=\'color:red\' id=\'productImage1Error\'>' . $errorMessages['productImage1Error'] . '</span>';
                         }
                         ?>
-                        <span style='color:red' id='productImage1Error2'/>
+                        <span style='color:red' id='productImage1Error2' name="productImage1Error2"/>
                         <span style='color:green' id='productImage1UpdatedMessage'/>
                     </td>
                 </tr>
@@ -191,7 +191,7 @@ require_once('./dao/productDAO.php');
                             echo '<span style=\'color:red\' id=\'productImage2Error\'>' . $errorMessages['productImage2Error'] . '</span>';
                         }
                         ?>
-                        <span style='color:red' id='productImage2Error2'/>
+                        <span style='color:red' id='productImage2Error2' name="productImage2Error2"/>
                         <span style='color:green' id='productImage2UpdatedMessage'/>
                     </td>
                 </tr>
@@ -205,7 +205,7 @@ require_once('./dao/productDAO.php');
                             echo '<span style=\'color:red\' id=\'productImage3Error\'>' . $errorMessages['productImage3Error'] . '</span>';
                         }
                         ?>
-                        <span style='color:red' id='productImage3Error2'/>
+                        <span style='color:red' id='productImage3Error2' name="productImage3Error2"/>
                         <span style='color:green' id='productImage3UpdatedMessage'/>
                     </td>
                 </tr>

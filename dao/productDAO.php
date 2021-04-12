@@ -184,40 +184,6 @@ class productDAO extends abstractDAO {
             return 'Could not connect to Database.';
         }
     }
-    
-    public function deleteProduct($productID){
-        if(!$this->mysqli->connect_errno){
-            $query = 'DELETE FROM product WHERE productID = ?';
-            $stmt = $this->mysqli->prepare($query);
-            $stmt->bind_param('i', $productID);
-            $stmt->execute();
-            if($stmt->error){
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-    
-    public function editProduct($productID, $productName, $productCatalog, $productPrice, $productDescription, $productRating, $productImage1, $productImage2, $productImage3, $productDate){
-        if(!$this->mysqli->connect_errno){
-            $query = 'UPDATE product SET productName = ?, productCatalog = ?, productPrice = ?, productDescription = ?, productRating = ?, productImage1 = ?, productImage2 = ?, productImage3 = ?, productDate = ? WHERE employeeId = ?';
-            $stmt = $this->mysqli->prepare($query);
-            $stmt->bind_param('ssi', $firstName, $lastName, $employeeId);
-            
-            $stmt->bind_param('ssdssssssi', $productName, $productCatalog, $productPrice, $productDescription, $productRating, $productImage1, $productImage2, $productImage3, $productDate, $productID);
-            $stmt->execute();
-            if($stmt->error){
-                return false;
-            } else {
-                return $stmt->affected_rows;
-            }
-        } else {
-            return false;
-        }
-    }
 }
 
 ?>
