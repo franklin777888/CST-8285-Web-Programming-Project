@@ -1,4 +1,8 @@
 <?php
+
+// Amended from Week 11 Demo employee.php
+// creating constructor, getters and setters
+
 	class Product implements JsonSerializable{
 		private $productID;
 		private $productName;

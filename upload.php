@@ -1,5 +1,7 @@
 <?php
 
+// copy and passte from lab8 uplload.php
+
 $target_dir = "images/";
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
 $uploadOk = 1;

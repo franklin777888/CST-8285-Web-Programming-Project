@@ -162,7 +162,7 @@ class productDAO extends abstractDAO {
             //for each parameter. 'i' is used for integers, and 's'
             //is used for strings.
             //echo $product->getProductImage3().$product->getProductDate();
-            $stmt->bind_param('sssdssss',        
+            $stmt->bind_param('ssdsisss',        
                     $product->getProductName(), 
                     $product->getProductCatalog(),
                     $product->getProductPrice(), 
