@@ -91,10 +91,11 @@ class productDAO extends abstractDAO {
         /*
      * Returns an array of <code>products</code> objects. If no product exist, returns false.
      */
-    public function getProductsByCategory($category){
+    public function getProductsByCategory(){
+		$category = $_GET['category'];
         //The query method returns a mysqli_result object
         $result = $this->mysqli->query('SELECT * FROM product
-                                       WHERE LOWER(productCatalog) like LOWER("%'.$category.'%")');
+                                       WHERE LOWER(productCatalog) = LOWER("'.$category.'")');
         $products = Array();
 
         if($result->num_rows >= 1){

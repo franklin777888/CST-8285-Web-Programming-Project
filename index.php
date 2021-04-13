@@ -39,32 +39,32 @@ var products = <?php echo json_encode($products); ?>;
         <br>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
             <div class="picture-container">
-                <a href="Search.php?search=Cups">
+                <a href="Search.php?category=Cups">
                     <img class="product-img" src="images/cup.jpg" alt="cup-1">
                 </a>
             </div>
             <div class="btns-container">
-                <a href="Search.php?search=Cups"><button class="btn btn-primary btn-lg btn-block shop-btn">SHOP CUPS</button></a>
+                <a href="Search.php?category=Cups"><button class="btn btn-primary btn-lg btn-block shop-btn">SHOP CUPS</button></a>
             </div>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
             <div class="picture-container">
-                <a href="Search.php?search=Accessories">
+                <a href="Search.php?category=Accessories">
                     <img class="product-img" src="images/accessoires.jpg" alt="collection2">
                 </a>
             </div>
             <div class="btns-container">
-                <a href="Search.php?search=Accessories"><button class="btn btn-primary btn-lg btn-block shop-btn">SHOP ACCESSORIES</button></a>
+                <a href="Search.php?category=Accessories"><button class="btn btn-primary btn-lg btn-block shop-btn">SHOP ACCESSORIES</button></a>
             </div>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
             <div class="picture-container">
-                <a href="Search.php?search=Cosmetics">
+                <a href="Search.php?category=Cosmetics">
                     <img class="product-img" src="images/cosmetics.jpg" alt="cosmetics-1">
                 </a>
             </div>
             <div class="btns-container">
-                <a href="Search.php?search=Cosmetics"><button class="btn btn-primary btn-lg btn-block shop-btn">SHOP COSMETICS</button></a>
+                <a href="Search.php?category=Cosmetics"><button class="btn btn-primary btn-lg btn-block shop-btn">SHOP COSMETICS</button></a>
             </div>
         </div>
     </div>    

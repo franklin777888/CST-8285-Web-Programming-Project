@@ -1,7 +1,12 @@
 <?php
 require_once('./dao/productDAO.php');
 $productDAO = new productDAO();
-$productsSearchByTerm = $productDAO->getProductsByTerm();
+
+if($_GET['category']!=''){
+	$productsSearchByTerm = $productDAO->getProductsByCategory();
+}else{
+	$productsSearchByTerm = $productDAO->getProductsByTerm();
+}
 ?>
 
 <script>
