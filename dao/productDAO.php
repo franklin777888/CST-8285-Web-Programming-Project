@@ -29,7 +29,7 @@ class productDAO extends abstractDAO {
 
         if($result->num_rows >= 1){
             while($row = $result->fetch_assoc()){
-                //Create a new employee object, and add it to the array.
+                //Create a new product object, and add it to the array.
                 $product = new Product($row['productID'],
                                         $row['productName'],
                                         $row['productCatalog'],
@@ -63,7 +63,7 @@ class productDAO extends abstractDAO {
 
             if($result->num_rows >= 1){
                 while($row = $result->fetch_assoc()){
-                    //Create a new employee object, and add it to the array.
+                    //Create a new product object, and add it to the array.
                     $product = new Product($row['productID'],
                                             $row['productName'],
                                             $row['productCatalog'],
