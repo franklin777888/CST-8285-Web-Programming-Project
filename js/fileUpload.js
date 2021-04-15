@@ -9,10 +9,13 @@ function uploadFile(fileNumber) {
     upload.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
             if(this.responseText == 1) {
-                document.querySelector('#productImage'+fileNumber+'UpdatedMessage').innerText = "Image uploaded successfully.";        
+				document.querySelector('#productImage'+fileNumber+'UpdatedMessage').innerText = "Image uploaded successfully.";        
+				document.querySelector('#productImage'+fileNumber+'Error').innerText = '';
+                document.querySelector('#productImage'+fileNumber+'ErrorInput').value = '';
             } else {
-                document.querySelector('#productImage'+fileNumber+'Error2').innerText = "An error occoured when uploading the image";
-                document.querySelector('#productImage'+fileNumber+'ErrorInput').value = "An error occoured when uploading the image";
+                document.querySelector('#productImage'+fileNumber+'Error').innerText = this.responseText;
+                document.querySelector('#productImage'+fileNumber+'ErrorInput').value = this.responseText;
+				document.querySelector('#productImage'+fileNumber+'UpdatedMessage').innerText='';
             }
         }
     }
